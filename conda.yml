@@ -1,0 +1,9 @@
+name: devenv-anomalydetector
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.7
+  - pip=21.2.4
+  - pip:
+    - -r requirements.txt
