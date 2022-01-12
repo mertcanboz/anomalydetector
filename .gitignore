@@ -140,3 +140,7 @@ venv.bak/
 bin
 packages
 debug/
+
+# Discard cython artifacts
+msanomalydetector/*.c
+msanomalydetector/*.pyd

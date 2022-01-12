@@ -6,7 +6,7 @@ import pandas as pd
 
 def detect_anomaly(series, threshold, mag_window, score_window, sensitivity, detect_mode):
     detector = SpectralResidual(series=series, threshold=threshold, mag_window=mag_window, score_window=score_window,
-                                sensitivity=sensitivity, detect_mode=detect_mode)
+                                sensitivity=sensitivity, detect_mode=detect_mode, batch_size=-1)
     print(detector.detect())
 
 
