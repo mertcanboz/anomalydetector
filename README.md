@@ -1,3 +1,26 @@
+# MS Anomaly Detector (Fork README)
+## Dev Environment 
+Tested on Windows 11 64bit with conda 4.10.3
+1. Install Anaconda
+2. Microsoft Visual C++ 14.0 or greater is required. Install them from https://visualstudio.microsoft.com/visual-cpp-build-tools/
+3. Create Conda Environment:
+```
+(base)> conda env create -f conda.yml
+(base)> conda activate devenv-anomalydetector
+(devenv-anomalydetector)> pip install -e .
+```
+4. Run tests:
+```
+(devenv-anomalydetector)> python -m unittest discover -s tests
+```
+5. Run Main:
+```
+(devenv-anomalydetector)> python .\main.py
+```
+
+# Upstream README
+
+---
 
 # Contributing
 
