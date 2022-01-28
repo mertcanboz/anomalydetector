@@ -144,3 +144,7 @@ debug/
 # Discard cython artifacts
 msanomalydetector/*.c
 msanomalydetector/*.pyd
+
+# Discard Dataset CSV
+kpi/kpi_test.csv
+kpi/kpi_train.csv
