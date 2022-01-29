@@ -1,4 +1,4 @@
-# MS Anomaly Detector (Fork README)
+# MS Anomaly Detector (Fork)
 ## Dev Environment 
 Tested on Windows 11 64bit with conda 4.10.3
 1. Install Anaconda
@@ -18,9 +18,36 @@ Tested on Windows 11 64bit with conda 4.10.3
 (devenv-anomalydetector)> python .\main.py
 ```
 
-# Upstream README
+## Reproduce Paper Results
+
+### KPI dataset 
+Extract `kpi\kpi.7z` in its folder. Activate the environment. 
+
+```
+(base)> conda activate devenv-anomalydetector
+(devenv-anomalydetector)> python kpi\ingest_kpi_dataset.py --csv-input-file kpi\kpi_train.csv --generate-data-and-plots
+(devenv-anomalydetector)> python sr\sr_evalue.py --csv-input-dir kpi\kpi_train_ts_data --parallel
+```
+
+| Dataset | Model | `batch_size` | `mag_window` | `score_window` | `threshold` | F1 Score | Precision | Recall | Time |
+| ------- |------|--------------| ------------ | -------------- | ----------- |----------| --------- | ------ | ---- |
+| KPI (train) | SR   | -1           | 3                    | 10000 | 0.375 | 0.66361  | 0.81299 | 0.5906 | 10.12s |
+| KPI (test) | SR   | -1           | 3            | 10000 | 0.375 | 0.67523  | 0.75665 | 0.60962 | 9.77s |
+
+### Notes from paper
+
+Parameters from paper, page 6, section 5.2 Metrics
+
+| Description  | Parameter | SR/SR-CNN |
+|--------------|----------|-----------|
+| Shape h_q(f) | q | 3 |
+| Number of local average of preceding points | z | 21 |
+| Threshold | tau | 3 |
+| Number of estimated points | k | 5 |
+| Sliding window size | omega | 1440 (KPI), 64 (Yahoo) |
 
 ---
+Upstream README:
 
 # Contributing
 

@@ -87,8 +87,8 @@ if __name__ == '__main__':
     if args.parallel:
         pool = mp.Pool(processes=4)
 
-    # best = fmin(objective, space, algo=tpe.suggest, max_evals=10, trials=trials, rstate=np.random.default_rng(1))
-    objective({'batch_size': -1, 'mag_window': 3, 'score_window': 10000, 'threshold': 0.375, 'run_parallel': args.parallel}); exit(0)
+    best = fmin(objective, space, algo=tpe.suggest, max_evals=10, trials=trials, rstate=np.random.default_rng(1))
+    # objective({'batch_size': -1, 'mag_window': 3, 'score_window': 10000, 'threshold': 0.375, 'run_parallel': args.parallel}); exit(0)
 
     trials_fname = "trials.pkl"
     pickle.dump(trials, open(trials_fname, "wb"))
