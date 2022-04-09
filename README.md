@@ -20,12 +20,15 @@ Tested on Windows 11 64bit with conda 4.10.3
 
 ## Reproduce Paper Results
 
-### KPI dataset 
+### KPI dataset
+
+#### Model SR
 Extract `kpi\kpi.7z` in its folder. Activate the environment. 
 
 ```
 (base)> conda activate devenv-anomalydetector
 (devenv-anomalydetector)> python kpi\ingest_kpi_dataset.py --csv-input-file kpi\kpi_train.csv --generate-data-and-plots
+
 (devenv-anomalydetector)> python sr\sr_evalue.py --csv-input-dir kpi\kpi_train_ts_data --parallel
 ```
 
@@ -33,6 +36,25 @@ Extract `kpi\kpi.7z` in its folder. Activate the environment.
 | ------- |------|--------------| ------------ | -------------- | ----------- |----------| --------- | ------ | ---- |
 | KPI (train) | SR   | -1           | 3                    | 10000 | 0.375 | 0.66361  | 0.81299 | 0.5906 | 10.12s |
 | KPI (test) | SR   | -1           | 3            | 10000 | 0.375 | 0.67523  | 0.75665 | 0.60962 | 9.77s |
+
+
+#### Model SR-CNN
+Extract `kpi\kpi.7z` in its folder. Activate the environment. 
+
+```
+(base)> conda activate devenv-anomalydetector
+(devenv-anomalydetector)> python kpi\ingest_kpi_dataset.py --csv-input-file kpi\kpi_train.csv --generate-data-and-plots
+
+(devenv-anomalydetector)> python srcnn\generate_data.py --data kpi\kpi_train_ts_data --window 1440
+(devenv-anomalydetector)> python srcnn\train.py --data kpi\kpi_train_ts_data --window 1440 --epoch 300
+(devenv-anomalydetector)> python srcnn\evalue.py --data kpi\kpi_train_ts_data_subset  --window 1440 --delay 7
+```
+
+| Dataset | Model | `batch_size` | `mag_window` | `score_window` | `threshold` | F1 Score | Precision | Recall | Time |
+| ------- |------|--------------| ------------ | -------------- | ----------- |----------| --------- | ------ | ---- |
+| KPI (train) | SR   | -1           | 3                    | 10000 | 0.375 | 0.66361  | 0.81299 | 0.5906 | 10.12s |
+| KPI (test) | SR   | -1           | 3            | 10000 | 0.375 | 0.67523  | 0.75665 | 0.60962 | 9.77s |
+
 
 ### Notes from paper
 

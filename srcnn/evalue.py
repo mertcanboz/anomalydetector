@@ -23,7 +23,7 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE CODE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
-
+import logging
 import os
 from srcnn.competition_metric import get_variance, evaluate_for_all_series
 import time
@@ -48,7 +48,7 @@ def getfid(path):
 
 def get_path(data_source):
     if data_source == 'kpi':
-        dir_ = root + '/Test/'
+        dir_ = root + '/'  #'/Test/'
         trainfiles = [dir_ + _ for _ in os.listdir(dir_)]
         files = trainfiles
     else:
@@ -63,11 +63,16 @@ def get_score(data_source, files, thres, option):
     savedscore = []
     for f in files:
         print('reading', f)
-        if data_source == 'kpi' or data_source == 'test_kpi':
-            in_timestamp, in_value, in_label = read_csv_kpi(f)
+        if f.endswith(".csv"):
+            if data_source.startswith("kpi"):
+                in_timestamp, in_value, in_label = read_csv_kpi(f)
+            else:
+                tmp_data = read_pkl(f)
+                in_timestamp, in_value, in_label = tmp_data['timestamp'], tmp_data['value'], tmp_data['label']
         else:
-            tmp_data = read_pkl(f)
-            in_timestamp, in_value, in_label = tmp_data['timestamp'], tmp_data['value'], tmp_data['label']
+            logging.warning(f"File {f} skipped, unknown extension")
+            continue
+
         length = len(in_timestamp)
         if model == 'sr_cnn' and len(in_value) < window:
             print("length is shorter than win_size", len(in_value), window)
@@ -88,7 +93,7 @@ if __name__ == '__main__':
     parser.add_argument('--epoch', type=int, default=10)
     parser.add_argument('--model_path', type=str, default='snapshot', help='model path')
     parser.add_argument('--delay', type=int, default=3, help='delay')
-    parser.add_argument('--thres', type=int, default=0.95, help='initial threshold of SR')
+    parser.add_argument('--thres', type=float, default=0.95, help='initial threshold of SR')
     parser.add_argument('--auto', type=bool, default=False, help='Automatic filling parameters')
     parser.add_argument('--model', type=str, default='sr_cnn', help='model')
     parser.add_argument('--missing_option', type=str, default='anomaly',

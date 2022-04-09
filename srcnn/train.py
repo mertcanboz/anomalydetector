@@ -70,10 +70,10 @@ if __name__ == '__main__':
     }
     model = args.model
     root_path = os.getcwd()
-    train_data_path = root_path + '/' + data + '_' + str(window) + '_train.json'
-    model_path = root_path + '/' + args.save + '/'
+    train_data_path = os.path.join(root_path, data + '_' + str(window) + '_train.json')
+    model_path = os.path.join(root_path, args.save)
     if args.load:
-        load_path = root_path + '/' + args.load
+        load_path = os.path.join(root_path, args.load)
     else:
         load_path = None
 

@@ -23,7 +23,8 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE CODE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
-
+from datetime import datetime
+import os
 import pickle
 import csv
 import numpy as np
@@ -54,7 +55,7 @@ def read_csv_kpi(path):
             if cnt == 0:
                 cnt += 1
                 continue
-            tm.append(int(row[0]))
+            tm.append(int(datetime.fromisoformat(row[0]).timestamp()))
             vl.append(float(row[1]))
             lb.append(int(row[2]))
             cnt += 1
@@ -174,7 +175,9 @@ def sr_cnn(data_path, model_path, win_size, lr, epochs, batch, num_worker, load_
         train(epoch, net, gen_data)
         adjust_lr(optimizer, epoch)
         if epoch % 5 == 0:
-            save_model(model, model_path + 'srcnn_retry' + str(epoch) + '_' + str(win_size) + '.bin')
+            os.makedirs(model_path, exist_ok=True)
+            model_filename = 'srcnn_retry' + str(epoch) + '_' + str(win_size) + '.bin'
+            save_model(model, os.path.join(model_path, model_filename))
     return
 
 
@@ -287,7 +290,7 @@ def sr_cnn_eval(timestamp, value, label, window, net, ms_optioin, threshold=0.95
     detres = [0] * (win_size - backaddnum)
     scores = [0] * (win_size - backaddnum)
 
-    for pt in range(win_size - backaddnum + back + step, length - back, step):
+    for pt in tqdm(range(win_size - backaddnum + back + step, length - back, step)):
         head = max(0, pt - (win_size - backaddnum))
         tail = min(length, pt)
         wave = np.array(SpectralResidual.extend_series(value[head:tail + back]))
@@ -310,4 +313,4 @@ def sr_cnn_eval(timestamp, value, label, window, net, ms_optioin, threshold=0.95
             if detres[i] == 1:
                 last = i
 
-    return timestamp[:].tolist(), label[:], detres[:], scores[:]
+    return timestamp[:], label[:], detres[:], scores[:]
