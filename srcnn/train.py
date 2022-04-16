@@ -57,13 +57,16 @@ if __name__ == '__main__':
     parser.add_argument('--num_workers', type=int, default=8, help='number of workers of pytorch')
     parser.add_argument('--model', type=str, default='sr_cnn', help='model')
     parser.add_argument('--auto', type=bool, default=False, help='Automatic filling parameters')
+    parser.add_argument('--use-gpu', default=False, action='store_true', help='Use CUDA GPU device')
 
     args = parser.parse_args()
     if args.auto:
         data, window = auto(args.epoch)
     else:
         data, window = args.data, args.window
-    torch.cuda.manual_seed(args.seed)
+
+    if args.use_gpu:
+        torch.cuda.manual_seed(args.seed)
     np.random.seed(args.seed)
     models = {
         'sr_cnn': sr_cnn,
@@ -80,7 +83,7 @@ if __name__ == '__main__':
     total_time = 0
     time_start = time.time()
     models[model](train_data_path, model_path, window, args.lr, args.epoch, args.batch_size, args.num_workers,
-                  load_path=load_path)
+                  load_path=load_path, use_gpu=args.use_gpu)
     time_end = time.time()
     total_time += time_end - time_start
     print('time used for training:', total_time, 'seconds')

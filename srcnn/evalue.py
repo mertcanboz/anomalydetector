@@ -98,6 +98,7 @@ if __name__ == '__main__':
     parser.add_argument('--model', type=str, default='sr_cnn', help='model')
     parser.add_argument('--missing_option', type=str, default='anomaly',
                         help='missing data option, anomaly means treat missing data as anomaly')
+    parser.add_argument('--use-gpu', default=False, action='store_true', help='Use CUDA GPU device')
 
     args = parser.parse_args()
     if args.auto:
@@ -116,7 +117,12 @@ if __name__ == '__main__':
 
     model_path = root + '/' + args.model_path + '/srcnn_retry' + str(epoch) + '_' + str(window) + '.bin'
     srcnn_model = Anomaly(window)
-    net = load_model(srcnn_model, model_path).cuda()
+    net = load_model(srcnn_model, model_path)
+    if args.use_gpu:
+        net = net.cuda()
+    else:
+        net = net.cpu()
+
     files = get_path(data_source)
     total_time, results, savedscore = get_score(data_source, files, args.thres, args.missing_option)
     print('\n***********************************************')
