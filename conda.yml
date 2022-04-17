@@ -13,4 +13,5 @@ dependencies:
   - pip:
     - tqdm==4.62.3
     - hyperopt==0.2.7
+    - azureml-core==1.40.0.post2
     - -r requirements.txt
