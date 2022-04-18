@@ -150,3 +150,6 @@ kpi/kpi_test.csv
 kpi/kpi_train.csv
 kpi/kpi_*_ts_data/
 kpi/kpi_*_ts_plot/
+
+*.amlignore
+*.amltmp
