@@ -48,7 +48,7 @@ Extract `kpi\kpi.7z` in its folder. Activate the environment.
 (devenv-anomalydetector)> python kpi\ingest_kpi_dataset.py --csv-input-file kpi\kpi_test.csv --generate-data-and-plots
 
 (devenv-anomalydetector)> python srcnn\generate_data.py --data kpi\kpi_train_ts_data --window 1440
-(devenv-anomalydetector)> python srcnn\train.py --data kpi\kpi_train_ts_data --window 1440 --epoch 300
+(devenv-anomalydetector)> python srcnn\train.py --data kpi\kpi_train_ts_data --window 1440 --epoch 300 --use-gpu
 (devenv-anomalydetector)> python srcnn\evalue.py --data kpi\kpi_train_ts_data_subset  --window 1440 --delay 7
 ```
 
