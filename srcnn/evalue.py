@@ -172,6 +172,8 @@ if __name__ == '__main__':
         total_fscore, pre, rec, TP, FP, TN, FN = evaluate_for_all_series(results, delay)
         print(total_fscore)
     best = 0.
+    best_i = -1
+    best_dict = {}
     for i in range(98):
         newresults = []
         threshold = 0.01 + i * 0.01
@@ -179,9 +181,19 @@ if __name__ == '__main__':
             pre = [1 if item > threshold else 0 for item in cnnscores]
             newresults.append([ftimestamp, flabel, pre, f])
         total_fscore, pre, rec, TP, FP, TN, FN = evaluate_for_all_series(newresults, delay, prt=False)
+        best_dict[i] = {
+            "total_fscore": total_fscore,
+            "pre": pre,
+            "rec": rec,
+            "TP": TP,
+            "FP": FP,
+            "TN": TN,
+            "FN": FN
+        }
         if total_fscore > best:
             best = total_fscore
             bestthre = threshold
+            best_i = i
             print('tem best', best, threshold)
     threshold = bestthre
-    print('best overall threshold :', threshold, 'best score :', best)
+    print('best overall threshold :', threshold, 'best score :', best, 'best_i: ', best_i, best_dict[best_i])
