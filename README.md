@@ -57,9 +57,9 @@ Extract `kpi\kpi.7z` in its folder. Activate the environment.
 ```
 Trained using Nvidia K80 on Azure ML. 
 
-| Dataset | Model | epoch | `delay` | `window` | `threshold` | F1 Score | Precision | Recall  | Time                                             |
-| ------- | ----- |------|---------| ----- |-----------|----------|-----------|---------|--------------------------------------------------|
-| KPI (test) | SRCNN | 7 | 110 | 1440 | 0.65 | 0.74906  | 0.75574   | 0.74250 | 55094.58s (train 300 epochs), 21600.68s (evalue) |
+| Dataset | Model | Epoch | `delay` | `window` | `threshold` | F1 Score | Precision | Recall  | Time                                             |
+| ------- | ----- |-----|---------| ----- |-----------|----------|-----------|---------|--------------------------------------------------|
+| KPI (test) | SRCNN | 110 | 7 | 1440 | 0.65 | 0.74906  | 0.75574   | 0.74250 | 55094.58s (train 300 epochs), 21600.68s (evalue) |
 
 ### Notes from paper
 
