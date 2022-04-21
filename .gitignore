@@ -4,9 +4,6 @@
 # Compiled class file
 *.class
 
-# Log file
-*.log
-
 # BlueJ files
 *.ctxt
 
@@ -80,7 +77,6 @@ coverage.xml
 *.pot
 
 # Django stuff:
-*.log
 local_settings.py
 db.sqlite3
 
@@ -144,3 +140,22 @@ debug/
 # Discard cython artifacts
 msanomalydetector/*.c
 msanomalydetector/*.pyd
+
+# Discard Dataset CSV
+kpi/kpi_test.csv
+kpi/kpi_train.csv
+kpi/kpi_*_ts_data/
+kpi/kpi_*_ts_plot/
+kpi/kpi_*_subset/
+kpi/*.json
+
+# Azure ML files
+*.amlignore
+*.amltmp
+
+# Train info
+auto.json
+**/trials.pkl
+snapshot
+notes.txt
+

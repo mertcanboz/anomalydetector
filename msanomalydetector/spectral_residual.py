@@ -23,6 +23,7 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE CODE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
+import warnings
 
 import pandas as pd
 import numpy as np
@@ -108,8 +109,7 @@ class SpectralResidual:
 
     def generate_spectral_score(self, mags):
         ave_mag = average_filter(mags, n=self.__score_window)
-        safeDivisors = np.clip(ave_mag, EPS, ave_mag.max())
-
+        safeDivisors = np.clip(ave_mag, EPS, np.max([EPS, ave_mag.max()]))
         raw_scores = np.abs(mags - ave_mag) / safeDivisors
         scores = np.clip(raw_scores / 10.0, 0, 1.0)
 

@@ -23,10 +23,12 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE CODE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
-
+from datetime import datetime
+import os
 import pickle
 import csv
 import numpy as np
+import torch.cpu.amp
 import torch.nn as nn
 import torch.utils.data as data
 from torch.autograd import Variable
@@ -54,7 +56,7 @@ def read_csv_kpi(path):
             if cnt == 0:
                 cnt += 1
                 continue
-            tm.append(int(row[0]))
+            tm.append(int(datetime.fromisoformat(row[0]).timestamp()))
             vl.append(float(row[1]))
             lb.append(int(row[2]))
             cnt += 1
@@ -78,7 +80,7 @@ def read_csv(path):
     return tm, vl
 
 
-def sr_cnn(data_path, model_path, win_size, lr, epochs, batch, num_worker, load_path=None):
+def sr_cnn(data_path, model_path, win_size, lr, epochs, batch, num_worker, load_path=None, use_gpu=False):
     def adjust_lr(optimizer, epoch):
         base_lr = lr
         cur_lr = base_lr * (0.5 ** ((epoch + 10) // 10))
@@ -86,7 +88,10 @@ def sr_cnn(data_path, model_path, win_size, lr, epochs, batch, num_worker, load_
             param['lr'] = cur_lr
 
     def Var(x):
-        return Variable(x.cuda())
+        if use_gpu:
+            return Variable(x.cuda())
+        else:
+            return Variable(x.cpu())
 
     def loss_function(x, lb):
         l2_reg = 0.
@@ -95,7 +100,9 @@ def sr_cnn(data_path, model_path, win_size, lr, epochs, batch, num_worker, load_
             l2_reg = l2_reg + W.norm(2)
         kpiweight = torch.ones(lb.shape)
         kpiweight[lb == 1] = win_size // 100
-        kpiweight = kpiweight.cuda()
+        if use_gpu:
+            kpiweight = kpiweight.cuda()
+
         BCE = F.binary_cross_entropy(x, lb, weight=kpiweight, reduction='sum')
         return l2_reg * l2_weight + BCE
 
@@ -156,9 +163,14 @@ def sr_cnn(data_path, model_path, win_size, lr, epochs, batch, num_worker, load_
                            loss1.item() / len(inputs)))
 
     model = Anomaly(win_size)
-    net = model.cuda()
-    gpu_num = torch.cuda.device_count()
-    net = torch.nn.DataParallel(net, list(range(gpu_num)))
+    if use_gpu:
+        net = model.cuda()
+        gpu_num = torch.cuda.device_count()
+        net = torch.nn.DataParallel(net, list(range(gpu_num)))
+
+    else:
+        net = model.cpu()
+
     print(net)
     base_lr = lr
     bp_parameters = filter(lambda p: p.requires_grad, net.parameters())
@@ -174,7 +186,9 @@ def sr_cnn(data_path, model_path, win_size, lr, epochs, batch, num_worker, load_
         train(epoch, net, gen_data)
         adjust_lr(optimizer, epoch)
         if epoch % 5 == 0:
-            save_model(model, model_path + 'srcnn_retry' + str(epoch) + '_' + str(win_size) + '.bin')
+            os.makedirs(model_path, exist_ok=True)
+            model_filename = 'srcnn_retry' + str(epoch) + '_' + str(win_size) + '.bin'
+            save_model(model, os.path.join(model_path, model_filename))
     return
 
 
@@ -287,7 +301,7 @@ def sr_cnn_eval(timestamp, value, label, window, net, ms_optioin, threshold=0.95
     detres = [0] * (win_size - backaddnum)
     scores = [0] * (win_size - backaddnum)
 
-    for pt in range(win_size - backaddnum + back + step, length - back, step):
+    for pt in tqdm(range(win_size - backaddnum + back + step, length - back, step)):
         head = max(0, pt - (win_size - backaddnum))
         tail = min(length, pt)
         wave = np.array(SpectralResidual.extend_series(value[head:tail + back]))
@@ -310,4 +324,4 @@ def sr_cnn_eval(timestamp, value, label, window, net, ms_optioin, threshold=0.95
             if detres[i] == 1:
                 last = i
 
-    return timestamp[:].tolist(), label[:], detres[:], scores[:]
+    return timestamp[:], label[:], detres[:], scores[:]

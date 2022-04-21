@@ -38,11 +38,11 @@ def reconstruct_label(timestamp, label):
     timestamp = np.asarray(timestamp, np.int64)
     index = np.argsort(timestamp)
 
-    timestamp_sorted = np.asarray(timestamp[index])
+    timestamp_sorted = timestamp[index]
     interval = np.min(np.diff(timestamp_sorted))
 
     label = np.asarray(label, np.int64)
-    label = np.asarray(label[index])
+    label = label[index]
 
     idx = (timestamp_sorted - timestamp_sorted[0]) // interval
 

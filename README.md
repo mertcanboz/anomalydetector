@@ -1,4 +1,4 @@
-# MS Anomaly Detector (Fork README)
+# MS Anomaly Detector (Fork)
 ## Dev Environment 
 Tested on Windows 11 64bit with conda 4.10.3
 1. Install Anaconda
@@ -18,9 +18,63 @@ Tested on Windows 11 64bit with conda 4.10.3
 (devenv-anomalydetector)> python .\main.py
 ```
 
-# Upstream README
+## Reproduce Paper Results
+
+### KPI dataset
+
+#### Model SR
+Extract `kpi\kpi.7z` in its folder. Activate the environment. 
+
+```
+(base)> conda activate devenv-anomalydetector
+(devenv-anomalydetector)> python kpi\ingest_kpi_dataset.py --csv-input-file kpi\kpi_train.csv --generate-data-and-plots
+(devenv-anomalydetector)> python kpi\ingest_kpi_dataset.py --csv-input-file kpi\kpi_test.csv --generate-data-and-plots
+
+(devenv-anomalydetector)> python sr\sr_evalue.py --csv-input-dir kpi\kpi_test_ts_data --parallel
+```
+
+| Dataset | Model | `batch_size` | `mag_window` | `score_window` | `threshold` | F1 Score | Precision | Recall | Time |
+| ------- |------|--------------| ------------ | -------------- | ----------- |----------| --------- | ------ | ---- |
+| KPI (train) | SR   | -1           | 3                    | 10000 | 0.375 | 0.66361  | 0.81299 | 0.5906 | 10.12s |
+| KPI (test) | SR   | -1           | 3            | 10000 | 0.375 | 0.67523  | 0.75665 | 0.60962 | 9.77s |
+
+
+#### Model SR-CNN
+Extract `kpi\kpi.7z` in its folder. Activate the environment. 
+
+```
+(base)> conda activate devenv-anomalydetector
+(devenv-anomalydetector)> python kpi\ingest_kpi_dataset.py --csv-input-file kpi\kpi_train.csv --generate-data-and-plots
+(devenv-anomalydetector)> python kpi\ingest_kpi_dataset.py --csv-input-file kpi\kpi_test.csv --generate-data-and-plots
+
+(devenv-anomalydetector)> python srcnn\generate_data.py --data kpi\kpi_train_ts_data --window 1440
+(devenv-anomalydetector)> python srcnn/train.py --data kpi/kpi_train_ts_data --window 1440 --epoch 300 --use-gpu >  srcnn_train_all_gpu.log
+# Train Epoch: 110 [0/46298 (0%)] Loss: 21.338150
+
+(devenv-anomalydetector)> python srcnn/evalue.py --data kpi/kpi_test_ts_data  --window 1440 --delay 7 --epoch 110  --use-gpu > srcnn_evalue_all_gpu_110.log
+(devenv-anomalydetector)> python srcnn/evalue.py --data kpi/kpi_test_ts_data  --window 1440 --delay 7 --epoch 300  --use-gpu > srcnn_evalue_all_gpu_300.log
+
+```
+Trained using Nvidia K80 on Azure ML. 
+
+| Dataset | Model | Epoch | `delay` | `window` | `threshold` | F1 Score | Precision | Recall  | Time                                             |
+| ------- | ----- |-----|---------| ----- |-----------|----------|-----------|---------|--------------------------------------------------|
+| KPI (test) | SRCNN | 110 | 7 | 1440 | 0.65 | 0.74906  | 0.75574   | 0.74250 | 55094.58s (train 300 epochs), 21600.68s (evalue) |
+
+### Notes from paper
+
+Parameters from paper, page 6, section 5.2 Metrics
+
+| Description  | Parameter | SR/SR-CNN |
+|--------------|----------|-----------|
+| Shape h_q(f) | q | 3 |
+| Number of local average of preceding points | z | 21 |
+| Threshold | tau | 3 |
+| Number of estimated points | k | 5 |
+| Sliding window size | omega | 1440 (KPI), 64 (Yahoo) |
 
 ---
+Upstream README:
 
 # Contributing
 

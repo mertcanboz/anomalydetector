@@ -23,7 +23,7 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE CODE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
-
+import logging
 import os
 from srcnn.competition_metric import get_variance, evaluate_for_all_series
 import time
@@ -48,7 +48,7 @@ def getfid(path):
 
 def get_path(data_source):
     if data_source == 'kpi':
-        dir_ = root + '/Test/'
+        dir_ = root + '/'  #'/Test/'
         trainfiles = [dir_ + _ for _ in os.listdir(dir_)]
         files = trainfiles
     else:
@@ -63,11 +63,16 @@ def get_score(data_source, files, thres, option):
     savedscore = []
     for f in files:
         print('reading', f)
-        if data_source == 'kpi' or data_source == 'test_kpi':
-            in_timestamp, in_value, in_label = read_csv_kpi(f)
+        if f.endswith(".csv"):
+            if data_source.startswith("kpi"):
+                in_timestamp, in_value, in_label = read_csv_kpi(f)
+            else:
+                tmp_data = read_pkl(f)
+                in_timestamp, in_value, in_label = tmp_data['timestamp'], tmp_data['value'], tmp_data['label']
         else:
-            tmp_data = read_pkl(f)
-            in_timestamp, in_value, in_label = tmp_data['timestamp'], tmp_data['value'], tmp_data['label']
+            logging.warning(f"File {f} skipped, unknown extension")
+            continue
+
         length = len(in_timestamp)
         if model == 'sr_cnn' and len(in_value) < window:
             print("length is shorter than win_size", len(in_value), window)
@@ -88,11 +93,12 @@ if __name__ == '__main__':
     parser.add_argument('--epoch', type=int, default=10)
     parser.add_argument('--model_path', type=str, default='snapshot', help='model path')
     parser.add_argument('--delay', type=int, default=3, help='delay')
-    parser.add_argument('--thres', type=int, default=0.95, help='initial threshold of SR')
+    parser.add_argument('--thres', type=float, default=0.95, help='initial threshold of SR')
     parser.add_argument('--auto', type=bool, default=False, help='Automatic filling parameters')
     parser.add_argument('--model', type=str, default='sr_cnn', help='model')
     parser.add_argument('--missing_option', type=str, default='anomaly',
                         help='missing data option, anomaly means treat missing data as anomaly')
+    parser.add_argument('--use-gpu', default=False, action='store_true', help='Use CUDA GPU device')
 
     args = parser.parse_args()
     if args.auto:
@@ -111,7 +117,12 @@ if __name__ == '__main__':
 
     model_path = root + '/' + args.model_path + '/srcnn_retry' + str(epoch) + '_' + str(window) + '.bin'
     srcnn_model = Anomaly(window)
-    net = load_model(srcnn_model, model_path).cuda()
+    net = load_model(srcnn_model, model_path)
+    if args.use_gpu:
+        net = net.cuda()
+    else:
+        net = net.cpu()
+
     files = get_path(data_source)
     total_time, results, savedscore = get_score(data_source, files, args.thres, args.missing_option)
     print('\n***********************************************')
@@ -161,6 +172,8 @@ if __name__ == '__main__':
         total_fscore, pre, rec, TP, FP, TN, FN = evaluate_for_all_series(results, delay)
         print(total_fscore)
     best = 0.
+    best_i = -1
+    best_dict = {}
     for i in range(98):
         newresults = []
         threshold = 0.01 + i * 0.01
@@ -168,9 +181,19 @@ if __name__ == '__main__':
             pre = [1 if item > threshold else 0 for item in cnnscores]
             newresults.append([ftimestamp, flabel, pre, f])
         total_fscore, pre, rec, TP, FP, TN, FN = evaluate_for_all_series(newresults, delay, prt=False)
+        best_dict[i] = {
+            "total_fscore": total_fscore,
+            "pre": pre,
+            "rec": rec,
+            "TP": TP,
+            "FP": FP,
+            "TN": TN,
+            "FN": FN
+        }
         if total_fscore > best:
             best = total_fscore
             bestthre = threshold
+            best_i = i
             print('tem best', best, threshold)
     threshold = bestthre
-    print('best overall threshold :', threshold, 'best score :', best)
+    print('best overall threshold :', threshold, 'best score :', best, 'best_i: ', best_i, best_dict[best_i])

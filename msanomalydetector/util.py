@@ -60,7 +60,7 @@ def average_filter(values, n=3):
         a list of value after the average_filter process.
     """
 
-    if n >= len(values):
+    if (n == -1) or (n >= len(values)):
         n = len(values)
 
     res = np.cumsum(values, dtype=float)

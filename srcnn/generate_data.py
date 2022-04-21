@@ -25,6 +25,8 @@ POSSIBILITY OF SUCH DAMAGE.
 """
 
 import argparse
+import glob
+
 from srcnn.utils import *
 import os
 import time
@@ -88,14 +90,7 @@ def auto(dic):
 
 
 def get_path(data):
-    dir_ = os.getcwd() + '/' + data + '/'
-    fadir = [_ for _ in os.listdir(dir_)]
-    print(fadir, 'fadir')
-    files = []
-    for eachdir in fadir:
-        files += [dir_ + eachdir + '/' + _ for _ in os.listdir(dir_ + eachdir)]
-    print(files, 'files')
-    return files
+    return glob.glob(os.path.join(os.getcwd(), data, "*"))
 
 
 if __name__ == '__main__':
