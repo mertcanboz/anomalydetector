@@ -1,0 +1,101 @@
+<module 'torch.utils.data' from '/anaconda/envs/devenv-anomalydetector/lib/python3.7/site-packages/torch/utils/data/__init__.py'> 1440 300
+loading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/snapshot/srcnn_retry300_1440.bin
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/.amlignore
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/.amlignore.amltmp
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_05f10d3a-239c-3bef-9bdc-a2feeb0037aa.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_0efb375b-b902-3661-ab23-9a0bb799f4e3.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_1c6d7a26-1f1a-3321-bb4d-7a9d969ec8f0.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_301c70d8-1630-35ac-8f96-bc1b6f4359ea.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_42d6616d-c9c5-370a-a8ba-17ead74f3114.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_43115f2a-baeb-3b01-96f7-4ea14188343c.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_431a8542-c468-3988-a508-3afd06a218da.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_4d2af31a-9916-3d9f-8a8e-8a268a48c095.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_54350a12-7a9d-3ca8-b81f-f886b9d156fd.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_55f8b8b8-b659-38df-b3df-e4a5a8a54bc9.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_57051487-3a40-3828-9084-a12f7f23ee38.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_6a757df4-95e5-3357-8406-165e2bd49360.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_6d1114ae-be04-3c46-b5aa-be1a003a57cd.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_6efa3a07-4544-34a0-b921-a155bd1a05e8.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_7103fa0f-cac4-314f-addc-866190247439.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_847e8ecc-f8d2-3a93-9107-f367a0aab37d.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_8723f0fb-eaef-32e6-b372-6034c9c04b80.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_9c639a46-34c8-39bc-aaf0-9144b37adfc8.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_a07ac296-de40-3a7c-8df3-91f642cc14d0.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_a8c06b47-cc41-3738-9110-12df0ee4c721.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_ab216663-dcc2-3a24-b1ee-2c3e550e06c9.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_adb2fde9-8589-3f5b-a410-5fe14386c7af.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_ba5f3328-9f3f-3ff5-a683-84437d16d554.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_c02607e8-7399-3dde-9d28-8a8da5e5d251.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_c69a50cf-ee03-3bd7-831e-407d36c7ee91.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_da10a69f-d836-3baa-ad40-3e548ecf1fbd.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_e0747cad-8dc8-38a9-a9ab-855b61f5551d.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_f0932edd-6400-3e63-9559-0a9860a1baa9.csv
+reading /mnt/batch/tasks/shared/LS_root/mounts/clusters/gpubox/code/Users/emer.rodriguez/anomalydetector/kpi/kpi_test_ts_data/kpi_test_ffb82d38-5f00-37db-abc0-5d2e4e4cb6aa.csv
+
+***********************************************
+data source: kpi/kpi_test_ts_data      model: sr_cnn
+-------------------------------
+precision 0.8032947824629457
+recall 0.6148826979472141
+f1 0.6965729887981064
+-------------------------------
+time used for making predictions: 22066.69308400154 seconds
+delay : 7
+tem best 0.22500954827957365 0.01
+tem best 0.3042886561017101 0.02
+tem best 0.3515394318149242 0.03
+tem best 0.3954404933395918 0.04
+tem best 0.4283158724395363 0.05
+tem best 0.4495573364862482 0.060000000000000005
+tem best 0.47303448380153545 0.06999999999999999
+tem best 0.4932844288466105 0.08
+tem best 0.5083415651410382 0.09
+tem best 0.5246975863593593 0.09999999999999999
+tem best 0.538959977583711 0.11
+tem best 0.5481225308308416 0.12
+tem best 0.5581649640327545 0.13
+tem best 0.5687930720946128 0.14
+tem best 0.5786859710944282 0.15000000000000002
+tem best 0.5877032480761993 0.16
+tem best 0.5955687242798354 0.17
+tem best 0.6026307004072912 0.18000000000000002
+tem best 0.60945325754145 0.19
+tem best 0.655887593842199 0.2
+tem best 0.6581484802893416 0.21000000000000002
+tem best 0.664829816864078 0.22
+tem best 0.6692355443850592 0.23
+tem best 0.6736114297951754 0.24000000000000002
+tem best 0.6787417617188103 0.25
+tem best 0.6841908674946308 0.26
+tem best 0.6889837289943984 0.27
+tem best 0.6936026936026936 0.28
+tem best 0.6984541624523147 0.29000000000000004
+tem best 0.699120358348481 0.31
+tem best 0.7027450596272987 0.32
+tem best 0.7061130391264039 0.33
+tem best 0.7091122073551005 0.34
+tem best 0.7120524792463158 0.35000000000000003
+tem best 0.715129698605938 0.36000000000000004
+tem best 0.7175719599236001 0.37
+tem best 0.7203358460088842 0.38
+tem best 0.7221428390249678 0.39
+tem best 0.724289342041565 0.4
+tem best 0.7272479192249965 0.41000000000000003
+tem best 0.7299106378607868 0.42000000000000004
+tem best 0.7323687104756669 0.43
+tem best 0.7339068013770136 0.44
+tem best 0.7351119664100769 0.47000000000000003
+tem best 0.737298397711518 0.48000000000000004
+tem best 0.7377145068255241 0.54
+tem best 0.738715152390582 0.55
+tem best 0.7404196791327716 0.56
+tem best 0.741733869138871 0.5700000000000001
+tem best 0.7426481958176807 0.5800000000000001
+tem best 0.7440596181736918 0.59
+tem best 0.7455748976009362 0.6
+tem best 0.7463053283948805 0.61
+tem best 0.7476898205132916 0.62
+tem best 0.7483307700100384 0.63
+tem best 0.7489340495044022 0.64
+tem best 0.7493848857644991 0.65
+best overall threshold : 0.65 best score : 0.7493848857644991 best_i:  64 {'total_fscore': 0.7493848857644991, 'pre': 0.7564519140989729, 'rec': 0.7424486803519061, 'TP': 40508, 'FP': 13042, 'TN': 3005954, 'FN': 14052}
